@@ -39,7 +39,7 @@ def create_report(text_file):
     print(f"{word_count} words found in the document\n")
 
     for char in char_dict:
-        if in_alphabet(char):
+        if str.isalpha(char):
             print(f"The '{char}' character was found {char_dict[char]} times")
 
     print("--- End report ---")
