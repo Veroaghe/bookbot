@@ -26,21 +26,30 @@ def count_characters(text):
     return char_dict
 
 
-def in_alphabet(char):
-    return ord(char.lower()) in range(ord('a'), ord('z') + 1)
+def convert_dict_to_list_of_dicts(dict):
+    L = []
+    for key in dict:
+        L.append({"char" : key, "count" : dict[key]})
+    return L
 
 
-def create_report(text_file):
+def create_report(text_file, sort_method="count"):
     text = get_text_contents(text_file)
     char_dict = count_characters(text)
     word_count = count_words(text)
 
+    def sort_on(dict, key=sort_method):
+        return dict[key]
+
+    char_list = convert_dict_to_list_of_dicts(char_dict)
+    char_list.sort(key=sort_on)
+
     print(f"--- Begin report of {text_file} ---")
     print(f"{word_count} words found in the document\n")
 
-    for char in char_dict:
-        if str.isalpha(char):
-            print(f"The '{char}' character was found {char_dict[char]} times")
+    for d in char_list:
+        if str.isalpha(d["char"]):
+            print(f"The '{d['char']}' character was found {d['count']} times")
 
     print("--- End report ---")
 
